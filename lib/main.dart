@@ -38,11 +38,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  final scrollController = DraggableScrollableController();
-
   double _additionalHeight = 1;
   double _horizontalIndex = 0;
   bool showModal = false;
+  String modalText = '';
 
   @override
   void initState() {
@@ -94,8 +93,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             }
           },
           onPanEnd: (d) {
-            if (_horizontalIndex == 1) {
+            if (_horizontalIndex == 1 || _horizontalIndex == 3) {
+              modalText = _horizontalIndex == 1 ? "Search" : "Settings";
               showModal = true;
+            } else {
+              showModal = false;
             }
             _additionalHeight = 1;
             _horizontalIndex = 0;
@@ -173,8 +175,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             height: height * .6,
-                            child: const Text(
-                              "Search",
+                            child: Text(
+                              modalText,
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.w800),
                             ),
